@@ -16,16 +16,6 @@ import (
 	"github.com/moby/moby/pkg/stdcopy"
 )
 
-type State int
-
-const (
-	Pending State = iota
-	Scheduled
-	Running
-	Completed
-	Failed
-)
-
 type Task struct {
 	ID            uuid.UUID
 	ContainerID   string
