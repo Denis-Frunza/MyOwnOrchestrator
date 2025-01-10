@@ -18,6 +18,14 @@ type Worker struct {
 	TaskCount int
 }
 
+func (w *Worker) GetTasks() []*task.Task {
+	tasks := []*task.Task{}
+	for _, t := range w.Db {
+		tasks = append(tasks, t)
+	}
+	return tasks
+}
+
 func (w *Worker) CollectStats() {
 	fmt.Println("I'll collect stats")
 }
@@ -55,7 +63,7 @@ func (w *Worker) RunTask() task.DockerResult {
 			result.Error = errors.New("it's strange that we get in here")
 		}
 	} else {
-		err := fmt.Errorf("Invalid transition from %v to %v", taskPersisted.State, taskQueued.State)
+		err := fmt.Errorf("invalid transition from %v to %v", taskPersisted.State, taskQueued.State)
 		result.Error = err
 		return result
 	}
